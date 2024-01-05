@@ -18,16 +18,12 @@ export const EventHistoryTable: FC<{ eventHistoryData: { eventType: string, data
                 header: "Data",
                 cell: ({ row }) => {
                     const tryGetData = (data: any) => {
-                        try { return (< ReactJson src={JSON.parse(data)} theme="monokai" />); }
-                        catch (e) { return data; }
+                        if (typeof data === "object") return (< ReactJson src={data} theme="monokai" />)
+                        else return data;
                     }
-                    const data = `${row.original.data}`
-                    console.log("🚀 ~ file: EventHistoryTable.tsx:24 ~ tryGetData ~ data:", data)
-                    return (<>{tryGetData(data)}
-                    </>
-                    )
-                },
 
+                    return (tryGetData(row.original.data))
+                },
             },
         ],
         [],
@@ -43,7 +39,7 @@ export const EventHistoryTable: FC<{ eventHistoryData: { eventType: string, data
 
         <div className="rounded-md border m-2">
             {table && (
-                <ScrollArea className="h-48" >
+                <ScrollArea className="h-96" >
                     <GenericTable table={table} columns={columns} />
                 </ScrollArea>)}
         </div>

@@ -75,18 +75,6 @@ export const Tier2NodeStats: FC<{ port: number }> = ({ port }) => {
         }
     })
 
-    let eventHistory: {eventType: string, data: any}[] = []
-    if(nodeData.eventHistory !== undefined)
-    {
-        eventHistory = Object.keys(nodeData.eventHistory.array).map(d => {
-            return {
-                eventType: nodeData.eventHistory.array[d].eventType,
-                //TODO data is always strin, not JSON
-                data: nodeData.eventHistory.array[d].data
-            }
-        })
-    }
-
     return (
         <div className="App mt-5">
 
@@ -137,10 +125,10 @@ export const Tier2NodeStats: FC<{ port: number }> = ({ port }) => {
                             </CardComponent>
                         </div>
 
-                        <CardComponent className="m-2 h-72 w-full rounded-md border" title="Events History">
-                            <EventHistoryTable eventHistoryData={eventHistory} />
+                        <CardComponent className="m-2 w-full rounded-md border" title="Events History">
+                            <EventHistoryTable eventHistoryData={nodeData.eventHistory?.array || []} />
                         </CardComponent>
-                        <CardComponent className="m-2 h-80 w-full rounded-md border" title="Connections">
+                        <CardComponent className="m-2 w-full rounded-md border" title="Connections">
                             <ConnectionsTable connectionsData={nodeData.connections} />
                         </CardComponent>
 
